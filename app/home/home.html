@@ -1,0 +1,22 @@
+﻿<div style="height: 100%;" data-ng-controller="home as vm">
+    <header class="site-head clearfix" style="background-image: url({{vm.SiteCoverUrl}});">
+        <div style="display: table-row">
+            <div class="vertical">
+                <div class="site-head-content inner">
+                    <h1 class="blog-title">{{vm.SiteName}}</h1>
+                    <h2 class="blog-description">{{vm.SiteDesciption}}</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main role="main">
+        <article class="post tag-getting-started">
+            <section>
+                <dir-disqus disqus-shortname="metkappmetkapp"
+                            disqus-identifier="{{vm.disqusId }}"
+                            ready-to-bind="{{vm.contentLoaded}}">
+                </dir-disqus>
+            </section>
+        </article>
+    </main>
+</div>

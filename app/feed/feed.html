@@ -1,0 +1,141 @@
+﻿<section data-ng-controller="feed as vm" >
+    <div ng-click="vm.viewClick()">
+        <div id="headerWrapper">
+            <div id="blue_header">
+                <div id="blue_header_inner">
+                    <div id="project_menu" class="mp_select projects_select" tabindex="0">
+                        <div ng-model="vm.selectAuthor" ng-click="vm.selectAuthor = !vm.selectAuthor;$event.stopPropagation();" class="select_button">
+                            <div title="">
+                                <div class="shadow">
+                                </div>
+                                <div class="title" ng-bind-html="vm.selectedAuthorName"></div>
+                                <div class="arrow"></div>
+                            </div>
+                            <div class="down_arrow_big"></div>
+                            <div class="down_arrow_small"></div>
+                        </div>
+                        <div ng-show="vm.selectAuthor" class="select_menu">
+                            <div class="list_input header search_box_container" style="display: none;">
+                                <input class="search_box" value="" placeholder="Search">
+                            </div>
+                            <div class="options_list">
+                                <div ng-repeat="(id,author) in vm.authors"
+                                     ng-class="{select_option:true, selected:id == vm.selectedAuthorId}"
+                                     ng-click="vm.filterByAuthor(id)">
+                                    <a href="javascript:void(0)" title="">
+                                        <span class="project_name">{{author.name}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <form id="create_project" class="list_input" action="" method="post">
+                                <input id="id_name" maxlength="100" name="name" placeholder="Введите ссылку" type="text" autocomplete="off">
+                                <div id="plus"></div>
+                                <input id="create_submit" class="disabled" type="submit" value="ДОБАВИТЬ" disabled="disabled" autocomplete="off">
+                            </form>
+                        </div>
+                    </div>
+                    <div id="user_dropdown">
+                    </div>
+                    <div id="user_menu">
+                        <a id="account_link" ng-click="vm.search()" href="javascript:void(0)">Обновить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100%" class="feedScreen feed home">
+            <!-- <a ng-repeat="(id,author) in vm.authors"
+                    ng-class="{customTicket:true, selected:id == vm.selectedAuthorId}"
+                    ng-style="vm.setTicketPosition($index)"
+                    ng-click="vm.filterByAuthor(id)"
+                    href="javascript:void(0)">
+                     <span class="icon"></span>
+                     <span class="text">{{author.name}}</span>
+                 </a>-->
+            <!--<header class="site-head clearfix" style="background-image: url(http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52c8b9c40b624_1.JPG); ">
+                    <div style="display: table-row">
+                        <div class="vertical">
+                            <div class="site-head-content inner">
+                                <h1 class="blog-title">Зульфат Ильясов</h1>
+                                <h2 class="blog-description">Приключения веб разработчика</h2>
+                            </div>
+                        </div>
+                    </div>
+                </header>-->
+            <div id="postsWrapper">
+                <div ng-class="{postsVisible:vm.loaded}"
+                     infinite-scroll="vm.loadMorePosts()"
+                     infinite-scroll-disabled='vm.loadingPosts'
+                     infinite-scroll-distance="1"
+                     class="testimonials" id="postsContainer">
+                    <div ng-repeat="post in vm.posts" id="post{{post.id}}" class="newItem">
+                        <div class="speech-bubble {{post.authorId}}" ng-style="{'border-top': '3px solid ' + post.color}" style="width: 530px; margin-bottom: 40px">
+                            <div style="display:none" class="postdate">{{post.dateUnix}}</div>
+                            <blockquote>
+                                <cite class="author">
+                                    <img class="author-avatar" ng-src="{{post.avatar}}">
+                                    <div style="margin-left: 10px" class="author-info">
+                                        <div ng-click="vm.filterByAuthor(post.authorId)" ng-style="{'color':post.color}" class="postAuthor name">{{post.name}}</div>
+                                    </div>
+                                </cite>
+                                <div>
+                                    <div style="text-align: center">
+                                        <img class="ui image postImage" ng-show="post.imageUrl" ng-src="{{post.imageUrl}}" ng-style="{width:post.imageWidth, height:post.imageHeight}" alt="" />
+                                    </div>
+                                    <p ng-show="post.text" ng-bind-html="post.text" id="text{{post.id}}" class="quote ellipsis">
+                                    </p>
+                                    <div class="showFull">
+                                        <a ng-click="vm.showFullText(post.id)" href="javascript:void(0)">Показать полностью</a>
+                                    </div>
+                                    <div ng-show="post.originalPost" class="originalPost">
+                                        <blockquote>
+                                            <cite class="author" style="padding-bottom: 5px; line-height: 34px;">
+                                                <img style="width: 34px;height: 34px;" class="author-avatar" ng-src="{{post.originalPost.avatar}}">
+                                                <div style="margin-left: 10px" class="author-info">
+                                                    <div style="font-size: 1.0rem;" ng-click="vm.filterByAuthor(post.originalPost.authorId)" class="name">{{post.originalPost.name}}</div>
+                                                </div>
+                                            </cite>
+                                            <div style="margin-left: 8px;">
+                                                <div style="text-align: center">
+                                                    <img class="ui image postImage"
+                                                         ng-show="post.originalPost.imageUrl"
+                                                         ng-style="{width:post.originalPost.imageWidth, height:post.originalPost.imageHeight}"
+                                                         ng-src="{{post.originalPost.imageUrl}}"
+                                                         alt="">
+                                                </div>
+                                                <p ng-bind-html="post.originalPost.text" class="quote ng-binding ellipsis"></p>
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div ng-show="post.link" class="link">
+                                        <a href="{{post.link.previewUrl}}" target="blank">{{post.link.description}}</a>
+                                    </div>
+                                </div>
+                                <div class="quote-date">
+                                    <div class="postRate">
+                                        <svg version="1.1" class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"> <path id="favorite-3-icon" d="M255.998,453.035C104.158,305.248,61.472,250.888,52.228,195.159
+C40.919,126.985,91.666,58.965,170.738,58.965c33.889,0,64.684,13.021,85.26,34.764c20.575-21.743,51.372-34.764,85.258-34.764
+c78.727,0,129.877,67.68,118.512,136.194C450.725,249.676,410.859,302.312,255.998,453.035z M170.738,98.965
+c-31.93,0-58.846,16.073-72.004,42.996c-33.693,68.938,42.189,138.947,157.264,254.254
+C371.51,280.471,446.879,210.742,413.262,141.961c-13.158-26.923-40.076-42.996-72.006-42.996c-51.453,0-73.387,40.516-85.258,59.65
+C244.847,140.644,224.802,98.965,170.738,98.965z"></path> </svg>
+                                        {{post.likesCount}}
+                                        <svg class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"> <path id="share-icon" d="M356.814,171.815c-15.021,0-29.121,3.938-41.329,10.834c-8.066,4.557-17.998,4.275-25.799-0.721
+l-87.311-55.909c-6.749-4.322-11.013-11.62-11.479-19.621C189.084,75.265,163.213,50,131,50c-33.137,0-60,26.863-60,60
+c0,42.486,42.832,71.156,81.814,55.898c7.459-2.919,15.866-2.083,22.612,2.236l75.168,48.134
+c13.644,8.737,21.974,23.859,22.036,40.06c0,0.004,0,0.008,0,0.012c0.062,15.71-7.933,30.359-21.163,38.831l-76.042,48.693
+c-6.735,4.313-15.163,5.151-22.611,2.236C113.785,330.828,71,359.574,71,402c0,33.137,26.863,60,60,60
+c32.186,0,58.085-25.241,59.897-56.397c0.464-7.988,4.74-15.307,11.479-19.622l87.31-55.909c7.793-4.99,17.741-5.272,25.799-0.721
+c12.208,6.896,26.308,10.835,41.329,10.835C403.309,340.186,441,302.493,441,256C441,209.506,403.309,171.815,356.814,171.815z"></path> </svg>
+                                        {{post.repostsCount}}
+                                    </div>
+                                    <div class="month">{{post.date}}</div>
+                                    <a href="{{post.url}}" target="blank" class="read">читать {{post.providerName}}</a>
+                                </div>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
