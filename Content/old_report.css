@@ -950,7 +950,7 @@ a:hover {
     text-shadow: 0 -1px #2a3747;
     font-size: 12px;
     font-weight: bold;
-    color: #8a9fbe;
+    color: rgba(255, 255, 255, 0.82);
 }
 #blue_header #user_menu a:hover {
     color: #fff;
