@@ -36,6 +36,8 @@
             'http://zulfat.net',
             'http://www.zulfat.net/feedle/',
             'http://zulfat.net/feedle/',
+            'http://clansman.github.io',
+            'http://clansman.github.io/feedle',
             'self']);
     }])
         .constant('version', '0.6')
