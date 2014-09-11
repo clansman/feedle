@@ -29,7 +29,7 @@
                 url: '/',
                 config: {
                     templateUrl: function (params) {
-                        return '/feedle/app/feed/feed.html';
+                        return 'www.zulfat.net/feedle/app/feed/feed.html';
                     },
                     title: 'feed',
                     reloadOnSearch: false
@@ -38,7 +38,7 @@
                 url: '/:code',
                 config: {
                     templateUrl: function (params) {
-                        return '/feedle/app/feed/feed.html';
+                        return 'www.zulfat.net/feedle/app/feed/feed.html';
                     },
                     title: 'feed',
                     reloadOnSearch: false
@@ -48,7 +48,7 @@
                 config: {
                     title: 'login',
                     templateUrl: function (params) {
-                        return '/feedle/app/login/login.html';
+                        return 'www.zulfat.net/feedle/app/login/login.html';
                     }
                 }
             }
