@@ -1,6 +1,6 @@
-﻿(function () { 
+(function () {
     'use strict';
-    
+
     var controllerId = 'shell';
     angular.module('app').controller(controllerId, ['$rootScope','$location', 'common', 'config', shell]);
 
@@ -27,7 +27,7 @@
             hideSplashPage();
         });*/
         vm.theme = "blue";
-        $rootScope.themeShellUrl = "/feedle/Content/" + vm.theme + "/shell.html";
+        $rootScope.themeShellUrl = "Content/" + vm.theme + "/shell.html";
         $rootScope.showTopMenu = true;
         activate();
         //hideSplashPage();
@@ -55,7 +55,7 @@
                  toggleSpinner(true);
             }
         );
-        
+
         $rootScope.$on('$routeChangeSuccess',
             function (event, next, current) {
                 toggleSpinner(true);
@@ -66,7 +66,7 @@
                 }
             }
         );
-        
+
         $rootScope.$on(events.controllerActivateSuccess,
             function(data) {
                  toggleSpinner(false);

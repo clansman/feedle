@@ -1,4 +1,4 @@
-﻿angular.module('app.services')
+angular.module('app.services')
 
     .factory('vk', ['common', function (common) {
         var _groups = [],
@@ -12,10 +12,10 @@
             //todo public вконтакте может быть и в имени домена
             return pageCode.indexOf('public') != 0 && pageCode.indexOf('club') != 0;
         }
-        
+
         function _getWallByDomain(domain, count) {
             var def = common.$q.defer();
-            
+
             var apiOptions = {
                 domain: domain,
                 extended: 1,
@@ -25,13 +25,13 @@
                 _resolveApiResponse(def, resp, domain);
             };
             VK.Api.call('wall.get', apiOptions, apiCallback);
-            
+
             return def.promise;
         }
 
         function _getWallById(wallId, count, offset) {
             var def = common.$q.defer();
-            
+
             var apiCallback = function(resp) {
                 _resolveApiResponse(def, resp, wallId);
             };
@@ -42,7 +42,7 @@
                 offset: offset || 0
             };
             VK.Api.call('wall.get', apiOptions, apiCallback);
-            
+
             return def.promise;
         }
 
@@ -66,7 +66,7 @@
             console.log('wall ' + wallId);
             console.log(resp);
         }
-        
+
         function getWallByAuthorId(id, offset, count) {
             var def = common.$q.defer();
             _getWallById(id, count, offset).then(function (w) {
@@ -79,7 +79,7 @@
             });
             return def.promise;
         }
-        
+
         function _findProfile(ownerId) {
             var profile = { Id: ownerId },
                 owner;
@@ -107,7 +107,7 @@
             }
             return result;
         }
-        
+
         function _isRepost(post) {
             return post.post_type == "copy";
         }
@@ -115,7 +115,7 @@
         function _getPostUrl(post) {
             return 'https://vk.com/feed?w=wall' + post.from_id + '_' + post.id;
         }
-        
+
         function _parseVkPost(post) {
             var imageUrl = null;
             var imageWidth = null;
@@ -137,7 +137,7 @@
                     authorId:owner.id,
                     screenName: owner.screenName,
                     avatar: owner.avatar,
-                    text: common.replaceUrlsWithTag(post.text),
+                    text: common.replaceUrlsWithTag(post.text)
                 };
             }
             if (post.attachment && post.attachment.type) {
@@ -171,7 +171,7 @@
                 }
             }
             var postText = common.replaceUrlsWithTag(isRepost ? post.copy_text : post.text);
-            
+
             return {
                 text: postText,
                 date: moment.unix(post.date).calendar(),
@@ -206,7 +206,7 @@
             }
             return size;
         }
-        
+
         function _getPageCode(url) {
             var parts = url.split('/');
             var vkIndex = parts.indexOf('vk.com');
@@ -222,11 +222,11 @@
                 return _getWallById(code, count);
             }
         }
-        
+
         function isVkUrl(url) {
             return url.indexOf('vk.com/') > -1;
         }
-        
+
         function getWallByUrl(url, count) {
             var code = _getPageCode(url);
             return _getWallByPageCode(code, count);
@@ -254,14 +254,14 @@
                     var feedlePosts = _getFeedlePosts(_wall);
                     def.resolve(feedlePosts);
                 });
-            }, 370 * pageUrls.length);
+            }, 500 * pageUrls.length);
             return def.promise;
         }
 
         function getAthors() {
             return _authors;
         }
-        
+
         return {
             wall: _wall,
             groups: _groups,
