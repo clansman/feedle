@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
     'use strict';
     var controllerId = 'feed';
     angular.module('app').controller(controllerId, ['common', '$routeParams', 'feedle', '$location', '$rootScope', 'loginService', 'commonConfig',
@@ -37,7 +37,8 @@
             'http://vk.com/kzngo',
             'https://vk.com/dzhemal',
             'https://vk.com/soraxcss',
-            'https://vk.com/habr'
+            'https://vk.com/habr',
+            'https://vk.com/public486026'
         ];
         var gpPageUrls = [
             'https://plus.google.com/+Jqueryrain/posts',
