@@ -27,7 +27,7 @@
             hideSplashPage();
         });*/
         vm.theme = "blue";
-        $rootScope.themeShellUrl = "Content/" + vm.theme + "/shell.html";
+        $rootScope.themeShellUrl = "/feedle/Content/" + vm.theme + "/shell.html";
         $rootScope.showTopMenu = true;
         activate();
         //hideSplashPage();
